@@ -13,7 +13,6 @@
     {% endwith %}
     
     <form method="POST" action="{{ url_for('register') }}">
-        {{ csrf_token() }}
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username" required>

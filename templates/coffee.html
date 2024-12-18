@@ -5,7 +5,6 @@
     <h2 class="card-title text-center">Add New Coffee</h2>
     
     <form method="POST" action="{{ url_for('add_coffee') }}">
-        {{ csrf_token() }}
         <div class="form-group">
             <label for="name">Coffee Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
