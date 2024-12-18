@@ -339,3 +339,42 @@ select.form-control {
 .small {
     font-size: 0.875rem;
 }
+
+/* Star Rating */
+.star-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.star-icon {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-icon.active {
+    color: #ffd700;
+}
+
+.star-icon.hover {
+    color: #ffed4a;
+}
+
+.star-rating .btn-link {
+    text-decoration: none;
+    transition: transform 0.1s;
+}
+
+.star-rating .btn-link:hover {
+    transform: scale(1.2);
+}
+
+.star-rating .btn-link:focus {
+    box-shadow: none;
+}
+
+.star-rating form {
+    display: inline-flex;
+    gap: 2px;
+}

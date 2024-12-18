@@ -346,4 +346,63 @@ def init_routes(app, limiter):
         
         last_shot = get_last_shot(current_user.id, coffee_id)
         return jsonify(last_shot if last_shot else {})
+
+    @app.route('/update_coffee_rating/<int:coffee_id>', methods=['POST'])
+    @login_required
+    def update_coffee_rating(coffee_id):
+        try:
+            coffee = Coffee.query.get_or_404(coffee_id)
+            
+            # Verify user owns this coffee
+            if coffee.user_id != current_user.id:
+                return jsonify({'error': 'Unauthorized'}), 403
+            
+            # Get and validate rating
+            data = request.get_json()
+            if not data or 'rating' not in data:
+                return jsonify({'error': 'Missing rating data'}), 400
+            
+            rating = data.get('rating')
+            if not isinstance(rating, int) or not 1 <= rating <= 5:
+                return jsonify({'error': 'Invalid rating value'}), 400
+            
+            # Update coffee rating
+            coffee.rating = rating
+            db.session.commit()
+            
+            return jsonify({
+                'success': True,
+                'rating': rating,
+                'message': 'Rating updated successfully'
+            })
+            
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error updating rating: {str(e)}")  # Add logging
+            return jsonify({'error': str(e)}), 500
+
+    @app.route('/rate_coffee/<int:coffee_id>/<int:rating>', methods=['POST'])
+    @login_required
+    def rate_coffee(coffee_id, rating):
+        coffee = Coffee.query.get_or_404(coffee_id)
+        
+        # Verify user owns this coffee
+        if coffee.user_id != current_user.id:
+            flash('Access denied', 'error')
+            return redirect(url_for('coffee_list'))
+        
+        # Validate rating
+        if not 1 <= rating <= 5:
+            flash('Invalid rating value', 'error')
+            return redirect(url_for('coffee_list'))
+        
+        try:
+            coffee.rating = rating
+            db.session.commit()
+            flash('Rating updated successfully!', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating rating: {str(e)}', 'error')
+        
+        return redirect(url_for('coffee_list'))
  

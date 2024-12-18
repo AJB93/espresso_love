@@ -54,6 +54,7 @@ class Coffee(db.Model):
     roast_date = db.Column(db.Date, nullable=False)
     tasting_notes = db.Column(db.Text)
     grams = db.Column(db.Float, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     def __repr__(self):

@@ -38,79 +38,47 @@
 </div>
 
 <!-- Main Content -->
-<div class="row">
-    <div class="col-md-8">
-        <!-- Shot submission form -->
-        <div class="card shadow-sm p-4 mb-4">
-            {% include 'partials/_shot_form.html' %}
+<form method="POST" action="{{ url_for('submit_shot') }}" id="shotForm">
+    <!-- Step 1: Select Coffee -->
+    <div class="card shadow-sm p-4 mb-4">
+        <h4 class="card-title mb-4">
+            <i class="fas fa-coffee text-primary"></i> 1. Select Your Coffee
+        </h4>
+        
+        <div class="form-group mb-0">
+            <div class="input-group">
+                <select class="form-control" id="coffee_id" name="coffee_id" required>
+                    <option value="">Select a coffee...</option>
+                    {% for coffee in coffees %}
+                        <option value="{{ coffee.id }}" 
+                                {% if coffee.id == default_coffee_id %}selected{% endif %}>
+                            {{ coffee.name }} by {{ coffee.roaster }} ({{ coffee.grams }}g left)
+                        </option>
+                    {% endfor %}
+                </select>
+                <div class="input-group-append">
+                    <a href="{{ url_for('add_coffee') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-plus"></i> New Coffee
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <div class="col-md-4">
-        <!-- Add Coffee Quick Card -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-coffee text-primary"></i> Quick Add Coffee
-                </h5>
-                <p class="text-muted small">Track a new coffee in your collection</p>
-                <a href="{{ url_for('add_coffee') }}" class="btn btn-outline-primary btn-block">
-                    <i class="fas fa-plus"></i> Add New Coffee
-                </a>
-            </div>
-        </div>
 
-        <!-- Quick Tips Card -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-lightbulb text-warning"></i> Quick Tips
-                </h5>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2">
-                        <i class="fas fa-check-circle text-success"></i> 
-                        Ideal ratio: 1:2 (coffee:yield)
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-clock text-info"></i> 
-                        Target time: 25-30s
-                    </li>
-                    <li class="mb-2">
-                        <i class="fas fa-thermometer-half text-danger"></i> 
-                        Water temp: 90-96°C
-                    </li>
-                    <li>
-                        <i class="fas fa-balance-scale text-primary"></i> 
-                        Dose: 18-21g
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <!-- Step 2: Shot Parameters -->
+    {% include 'partials/_shot_form.html' %}
 
-        <!-- Last Shot Card -->
-        {% if last_shot %}
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <i class="fas fa-history text-info"></i> Last Shot
-                </h5>
-                <ul class="list-unstyled mb-0">
-                    <li class="mb-2">
-                        <small class="text-muted">Grind Size:</small><br>
-                        {{ last_shot.grind_size }}
-                    </li>
-                    <li class="mb-2">
-                        <small class="text-muted">Ratio:</small><br>
-                        1:{{ "%.1f"|format(last_shot.shot_yield / last_shot.coffee_weight) }}
-                    </li>
-                    <li>
-                        <small class="text-muted">Time:</small><br>
-                        {{ last_shot.shot_time }}s
-                    </li>
-                </ul>
-            </div>
-        </div>
-        {% endif %}
+    <!-- Step 3: Taste Ratings -->
+    {% include 'partials/_taste_ratings.html' %}
+
+    <!-- Submit Button -->
+    <div class="card shadow-sm p-4">
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton">
+            <i class="fas fa-save"></i> Save Shot
+        </button>
+        <small class="form-text text-muted text-center mt-2">
+            This will record your shot and update your coffee inventory
+        </small>
     </div>
-</div>
+</form>
 {% endblock %}

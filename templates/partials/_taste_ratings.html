@@ -1,0 +1,61 @@
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="card-title mb-4">
+        <i class="fas fa-balance-scale text-primary"></i> 3. Rate Your Shot
+    </h4>
+
+    <div class="form-group">
+        <label for="taste">Taste Balance:</label>
+        <div class="range-slider">
+            <input type="range" 
+                   class="form-control-range custom-range" 
+                   id="taste" 
+                   name="taste" 
+                   min="0" 
+                   max="100" 
+                   value="50"
+                   required
+                   oninput="updateRangeValue(this, 'tasteValue')">
+            <div class="d-flex justify-content-between mt-2">
+                <small class="text-danger">Too Sour</small>
+                <small class="text-warning">Slightly Sour</small>
+                <small class="text-success">Balanced</small>
+                <small class="text-warning">Slightly Bitter</small>
+                <small class="text-danger">Too Bitter</small>
+            </div>
+            <div class="text-center">
+                <span id="tasteValue" class="badge badge-secondary">50</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="body">Body:</label>
+        <div class="range-slider">
+            <input type="range" 
+                   class="form-control-range custom-range" 
+                   id="body" 
+                   name="body" 
+                   min="0" 
+                   max="100" 
+                   value="50"
+                   required
+                   oninput="updateRangeValue(this, 'bodyValue')">
+            <div class="d-flex justify-content-between mt-2">
+                <small class="text-danger">Too Light</small>
+                <small class="text-warning">Light</small>
+                <small class="text-success">Balanced</small>
+                <small class="text-warning">Heavy</small>
+                <small class="text-danger">Too Heavy</small>
+            </div>
+            <div class="text-center">
+                <span id="bodyValue" class="badge badge-secondary">50</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mb-0">
+        <label for="notes">Notes:</label>
+        <textarea class="form-control" id="notes" name="notes" rows="3" 
+                  placeholder="Describe the flavors, aromas, or anything notable about this shot"></textarea>
+    </div>
+</div> 

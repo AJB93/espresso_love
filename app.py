@@ -25,6 +25,14 @@ migrate = Migrate()
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+def init_db(app):
+    with app.app_context():
+        db.create_all()
+        try:
+            migrate.init_app(app, db)
+        except Exception as e:
+            print(f"Migration error: {e}")
+
 def create_app():
     app = Flask(__name__)
     
@@ -34,7 +42,10 @@ def create_app():
     
     # Security configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['SESSION_COOKIE_SECURE'] = SESSION_COOKIE_SECURE
+    
+    # Session configuration
+    is_production = os.environ.get('FLASK_ENV') == 'production'
+    app.config['SESSION_COOKIE_SECURE'] = is_production
     app.config['SESSION_COOKIE_HTTPONLY'] = SESSION_COOKIE_HTTPONLY
     app.config['SESSION_COOKIE_SAMESITE'] = SESSION_COOKIE_SAMESITE
     
@@ -45,17 +56,17 @@ def create_app():
     
     # Initialize extensions with app
     db.init_app(app)
-    migrate.init_app(app, db)
+    init_db(app)
     login_manager.init_app(app)
     
-    # Initialize Talisman
-    Talisman(app, content_security_policy=None)
+    # Initialize Talisman without forcing HTTPS
+    Talisman(app, content_security_policy=None, force_https=False)
     
     # Initialize Limiter
     limiter = Limiter(
         app=app,
         key_func=get_remote_address,
-        default_limits=["1000 per day", "500 per minute"]
+        default_limits=["200 per day", "50 per hour"]
     )
     
     login_manager.login_view = 'login'
@@ -72,8 +83,8 @@ def create_app():
     
     return app
 
+# Create the app instance outside of main
 app = create_app()
 
 if __name__ == '__main__':
-    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
-    app.run(debug=debug_mode)
+    app.run(debug=False)

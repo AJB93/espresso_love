@@ -1,30 +1,7 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="card-title mb-0">Submit Espresso Shot</h2>
-    <a href="{{ url_for('grinder_settings') }}" class="text-muted" title="Grinder Settings">
-        <i class="fas fa-cog"></i>
-    </a>
-</div>
-
-<form method="POST" action="{{ url_for('submit_shot') }}" id="shotForm">
-    <div class="form-group">
-        <label for="coffee_id">Coffee:</label>
-        <div class="input-group">
-            <select class="form-control" id="coffee_id" name="coffee_id" required>
-                <option value="">Select a coffee...</option>
-                {% for coffee in coffees %}
-                    <option value="{{ coffee.id }}" 
-                            {% if coffee.id == default_coffee_id %}selected{% endif %}>
-                        {{ coffee.name }} by {{ coffee.roaster }} ({{ coffee.grams }}g left)
-                    </option>
-                {% endfor %}
-            </select>
-            <div class="input-group-append">
-                <a href="{{ url_for('add_coffee') }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-plus"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="card-title mb-4">
+        <i class="fas fa-flask text-primary"></i> 2. Enter Shot Details
+    </h4>
 
     <div class="form-group">
         <label for="grind_size">Grind Size:</label>
@@ -73,7 +50,7 @@
                required>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-0">
         <label for="shot_time">Time (s):</label>
         <input type="number" 
                class="form-control" 
@@ -85,96 +62,4 @@
                value="30"
                required>
     </div>
-
-    <div class="form-group">
-        <label for="taste">Taste Balance:</label>
-        <div class="range-slider">
-            <input type="range" 
-                   class="form-control-range custom-range" 
-                   id="taste" 
-                   name="taste" 
-                   min="0" 
-                   max="100" 
-                   value="50"
-                   required
-                   oninput="updateRangeValue(this, 'tasteValue')">
-            <div class="d-flex justify-content-between mt-2">
-                <small class="text-danger">Too Sour</small>
-                <small class="text-warning">Slightly Sour</small>
-                <small class="text-success">Balanced</small>
-                <small class="text-warning">Slightly Bitter</small>
-                <small class="text-danger">Too Bitter</small>
-            </div>
-            <div class="text-center">
-                <span id="tasteValue" class="badge badge-secondary">50</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="body">Body:</label>
-        <div class="range-slider">
-            <input type="range" 
-                   class="form-control-range custom-range" 
-                   id="body" 
-                   name="body" 
-                   min="0" 
-                   max="100" 
-                   value="50"
-                   required
-                   oninput="updateRangeValue(this, 'bodyValue')">
-            <div class="d-flex justify-content-between mt-2">
-                <small class="text-danger">Too Light</small>
-                <small class="text-warning">Light</small>
-                <small class="text-success">Balanced</small>
-                <small class="text-warning">Heavy</small>
-                <small class="text-danger">Too Heavy</small>
-            </div>
-            <div class="text-center">
-                <span id="bodyValue" class="badge badge-secondary">50</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="notes">Notes:</label>
-        <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
-    </div>
-
-    <div class="form-group mt-4">
-        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton">
-            <i class="fas fa-check-circle"></i> Record This Shot
-        </button>
-        <small class="form-text text-muted text-center mt-2">
-            Track your shot to improve your espresso journey
-        </small>
-    </div>
-</form>
-
-<script>
-function updateRangeValue(input, valueId) {
-    const value = input.value;
-    const valueElement = document.getElementById(valueId);
-    valueElement.textContent = value;
-    
-    // Update badge color based on value
-    valueElement.className = 'badge';
-    if (value < 25) {
-        valueElement.classList.add('badge-danger');
-    } else if (value < 45) {
-        valueElement.classList.add('badge-warning');
-    } else if (value <= 55) {
-        valueElement.classList.add('badge-success');
-    } else if (value < 75) {
-        valueElement.classList.add('badge-warning');
-    } else {
-        valueElement.classList.add('badge-danger');
-    }
-}
-
-// Initialize range values
-document.addEventListener('DOMContentLoaded', function() {
-    updateRangeValue(document.getElementById('taste'), 'tasteValue');
-    updateRangeValue(document.getElementById('body'), 'bodyValue');
-});
-</script> 
+</div> 

@@ -8,8 +8,8 @@
               action="{{ url_for('delete_coffee', coffee_id=coffee.id) }}" 
               class="d-inline" 
               onsubmit="return confirm('Are you sure you want to delete this coffee?');">
-            <button type="submit" class="btn btn-danger">
-                <i class="fas fa-trash"></i> Delete Coffee
+            <button type="submit" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i>
             </button>
         </form>
     </div>
@@ -64,6 +64,22 @@
                    step="{{ COFFEE_SETTINGS['GRAMS']['step'] }}"
                    value="{{ coffee.grams }}"
                    required>
+        </div>
+        
+        <div class="form-group">
+            <label>Rating:</label>
+            <div class="star-rating">
+                <form method="POST" class="d-inline" style="white-space: nowrap;">
+                    {% for i in range(1, 6) %}
+                    <button type="submit" 
+                            formaction="{{ url_for('rate_coffee', coffee_id=coffee.id, rating=i) }}"
+                            class="btn btn-link p-0 m-0"
+                            style="color: {% if coffee.rating and i <= coffee.rating %}#ffd700{% else %}#ccc{% endif %}">
+                        <i class="fas fa-star"></i>
+                    </button>
+                    {% endfor %}
+                </form>
+            </div>
         </div>
         
         <div class="d-flex justify-content-between mt-4">
