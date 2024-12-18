@@ -13,6 +13,7 @@
     {% endwith %}
     
     <form method="POST" action="{{ url_for('grinder_settings') }}">
+        {{ csrf_token() }}
         <div class="form-group">
             <label for="grinder_type">Grinder Type:</label>
             <select class="form-control" id="grinder_type" name="grinder_type" onchange="toggleStepSettings()" required>
