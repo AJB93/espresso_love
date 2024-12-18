@@ -42,6 +42,8 @@ def create_app():
     
     return app
 
+# Create the app instance outside of main
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+    app.run(debug=False)
