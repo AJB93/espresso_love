@@ -55,7 +55,7 @@ def create_app():
     limiter = Limiter(
         app=app,
         key_func=get_remote_address,
-        default_limits=["200 per day", "50 per hour"]
+        default_limits=["1000 per day", "500 per minute"]
     )
     
     login_manager.login_view = 'login'

@@ -192,7 +192,7 @@ def init_routes(app, limiter):
         return render_template('grinder_settings.html', settings=settings, GRINDER_SETTINGS=GRINDER_SETTINGS)
 
     @app.route('/login', methods=['GET', 'POST'])
-    @limiter.limit("5 per minute")
+    @limiter.limit("500 per minute")
     def login():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
@@ -214,7 +214,7 @@ def init_routes(app, limiter):
         return render_template('login.html')
 
     @app.route('/register', methods=['GET', 'POST'])
-    @limiter.limit("5 per minute")
+    @limiter.limit("500 per minute")
     def register():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
