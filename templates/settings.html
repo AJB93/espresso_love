@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="card-title text-center">Settings</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="list-group">
+        <a href="{{ url_for('grinder_settings') }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Grinder Settings</h5>
+                <small>Configure your grinder parameters</small>
+            </div>
+            <p class="mb-1">Set your grinder's minimum and maximum sizes, and step increments.</p>
+        </a>
+        <!-- Add more settings options here in the future -->
+    </div>
+</div>
+{% endblock %} 

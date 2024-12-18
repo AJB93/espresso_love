@@ -1,0 +1,341 @@
+:root {
+  /* Rich coffee-inspired colors */
+  --coffee-dark: #2C1810;
+  --coffee-medium: #4A3428;
+  --coffee-light: #8B7355;
+  --crema: #D4B16A;
+  --foam: #F5E6D3;
+  --accent: #E67E22;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--foam);
+    margin-bottom: 60px;
+}
+
+h1, h2 {
+    color: var(--coffee-dark);
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: var(--coffee-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: var(--foam) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--foam);
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--crema);
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--crema);
+    font-weight: 500;
+}
+
+/* Dropdown styling */
+.dropdown-menu {
+    background-color: var(--coffee-dark);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 0.5rem;
+}
+
+.dropdown-item {
+    color: var(--foam);
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--coffee-medium);
+    color: var(--crema);
+}
+
+.dropdown-item i {
+    width: 1.5rem;
+    text-align: center;
+    margin-right: 0.5rem;
+}
+
+/* Mobile navigation */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        padding: 1rem 0;
+    }
+    
+    .navbar-nav {
+        padding: 0.5rem 0;
+    }
+    
+    .dropdown-menu {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .dropdown-item {
+        padding-left: 2.5rem;
+    }
+}
+
+/* Button styling */
+.btn-burnt-orange {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.btn-burnt-orange:hover {
+    background-color: #d35400;
+    border-color: #d35400;
+    color: white;
+}
+
+/* Table styling */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: var(--coffee-dark);
+    color: var(--foam);
+    border: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(139, 115, 85, 0.1);
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid var(--coffee-light);
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem rgba(230, 126, 34, 0.25);
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+/* Jumbotron styling */
+.jumbotron {
+    background-color: var(--coffee-medium);
+    color: var(--foam);
+    border-radius: 12px;
+}
+
+/* Range slider styling */
+.custom-range {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right,
+        #dc3545 0%,    /* red */
+        #ffc107 25%,   /* orange/warning */
+        #28a745 50%,   /* green */
+        #ffc107 75%,   /* orange/warning */
+        #dc3545 100%   /* red */
+    );
+    outline: none;
+}
+
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--coffee-dark);
+    cursor: pointer;
+    border: 2px solid var(--foam);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.custom-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--coffee-dark);
+    cursor: pointer;
+    border: 2px solid var(--foam);
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+
+.range-slider {
+    padding: 0.5rem 0;
+}
+
+.range-slider .badge {
+    min-width: 40px;
+    margin-top: 0.5rem;
+}
+
+/* List group styling */
+.list-group-item {
+    border-radius: 8px !important;
+    margin-bottom: 8px;
+    border: 1px solid rgba(139, 115, 85, 0.2);
+}
+
+.list-group-item-action:hover {
+    background-color: rgba(139, 115, 85, 0.1);
+}
+
+/* Card title styling */
+.card-title {
+    color: var(--coffee-dark);
+    font-weight: 600;
+}
+
+/* Input group styling */
+.input-group-text {
+    background-color: var(--coffee-dark);
+    color: var(--foam);
+    border: none;
+}
+
+/* Small text styling */
+.text-muted {
+    color: var(--coffee-light) !important;
+}
+
+/* Link styling */
+a {
+    color: var(--accent);
+}
+
+a:hover {
+    color: #d35400;
+    text-decoration: none;
+}
+
+/* Custom form label styling */
+label {
+    color: var(--coffee-medium);
+    font-weight: 500;
+}
+
+/* Custom select styling */
+select.form-control {
+    background-color: white;
+}
+
+/* Custom button group styling */
+.btn-group {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Flash message styling */
+#flash-messages .alert {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .card {
+        border-radius: 8px;
+    }
+    
+    .jumbotron {
+        padding: 2rem 1rem;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Dashboard Stats */
+.card.bg-light {
+    border: none;
+    transition: transform 0.2s;
+}
+
+.card.bg-light:hover {
+    transform: translateY(-2px);
+}
+
+.card.bg-light h6 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card.bg-light h3 {
+    color: var(--coffee-dark);
+    font-weight: 600;
+}
+
+/* Quick Tips */
+.list-unstyled li i {
+    width: 20px;
+    margin-right: 8px;
+}
+
+/* Last Shot Card */
+.card-title i {
+    margin-right: 8px;
+}
+
+/* Call to action buttons */
+.btn-lg {
+    padding: 0.75rem 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn i {
+    margin-right: 0.5rem;
+}
+
+/* Quick add card */
+.card-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.card-title i {
+    margin-right: 0.5rem;
+}
+
+.small {
+    font-size: 0.875rem;
+}

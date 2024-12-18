@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="card-title mb-0">Edit Coffee</h2>
+        <form method="POST" 
+              action="{{ url_for('delete_coffee', coffee_id=coffee.id) }}" 
+              class="d-inline" 
+              onsubmit="return confirm('Are you sure you want to delete this coffee?');">
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete Coffee
+            </button>
+        </form>
+    </div>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="name">Coffee Name:</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="name" 
+                   name="name" 
+                   value="{{ coffee.name }}"
+                   required>
+        </div>
+        
+        <div class="form-group">
+            <label for="roaster">Roaster:</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="roaster" 
+                   name="roaster" 
+                   value="{{ coffee.roaster }}"
+                   required>
+        </div>
+        
+        <div class="form-group">
+            <label for="roast_date">Roast Date:</label>
+            <input type="date" 
+                   class="form-control" 
+                   id="roast_date" 
+                   name="roast_date" 
+                   value="{{ coffee.roast_date.strftime('%Y-%m-%d') }}"
+                   required>
+        </div>
+        
+        <div class="form-group">
+            <label for="tasting_notes">Tasting Notes:</label>
+            <textarea class="form-control" 
+                      id="tasting_notes" 
+                      name="tasting_notes" 
+                      rows="3">{{ coffee.tasting_notes }}</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="grams">Amount ({{ COFFEE_SETTINGS['GRAMS']['unit'] }}):</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="grams" 
+                   name="grams"
+                   min="{{ COFFEE_SETTINGS['GRAMS']['min'] }}"
+                   max="{{ COFFEE_SETTINGS['GRAMS']['max'] }}"
+                   step="{{ COFFEE_SETTINGS['GRAMS']['step'] }}"
+                   value="{{ coffee.grams }}"
+                   required>
+        </div>
+        
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ url_for('coffee_list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+            </a>
+            <button type="submit" class="btn btn-burnt-orange">
+                <i class="fas fa-save"></i> Update Coffee
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %} 

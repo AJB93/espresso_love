@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card shadow-sm p-4">
+        <h2 class="card-title text-center">Espresso Shot History</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% if grouped_shots %}
+            {% for month_year, shots in grouped_shots.items() %}
+                <h3>{{ month_year }}</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Grind Size</th>
+                                <th>Dose (g)</th>
+                                <th>Time (s)</th>
+                                <th>Yield (g)</th>
+                                <th>Taste</th>
+                                <th>Body</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for shot in shots %}
+                            <tr>
+                                <td>{{ shot['formatted_date'] }}</td>
+                                <td>{{ shot['grind_size'] }}</td>
+                                <td>{{ shot['coffee_weight'] }}</td>
+                                <td>{{ shot['shot_time'] }}</td>
+                                <td>{{ shot['shot_yield'] }}</td>
+                                <td>{{ shot['taste'] }}</td>
+                                <td>{{ shot['body'] }}</td>
+                                <td>{{ shot['notes']|default('', true) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                No shots recorded yet. Start tracking your shots from the home page!
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

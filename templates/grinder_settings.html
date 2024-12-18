@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="card-title text-center">Grinder Settings</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST" action="{{ url_for('grinder_settings') }}">
+        <div class="form-group">
+            <label for="grinder_type">Grinder Type:</label>
+            <select class="form-control" id="grinder_type" name="grinder_type" onchange="toggleStepSettings()" required>
+                {% for option in GRINDER_SETTINGS['GRINDER_TYPE']['options'] %}
+                    <option value="{{ option }}" {{ 'selected' if settings.grinder_type == option else '' }}>
+                        {{ option|title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="min_size">Minimum Size:</label>
+            <input type="number" class="form-control" id="min_size" name="min_size" 
+                   step="{{ GRINDER_SETTINGS['MIN_SIZE']['step'] }}"
+                   min="{{ GRINDER_SETTINGS['MIN_SIZE']['min'] }}"
+                   max="{{ GRINDER_SETTINGS['MIN_SIZE']['max'] }}"
+                   value="{{ settings.min_size }}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="max_size">Maximum Size:</label>
+            <input type="number" class="form-control" id="max_size" name="max_size"
+                   step="{{ GRINDER_SETTINGS['MAX_SIZE']['step'] }}"
+                   min="{{ GRINDER_SETTINGS['MAX_SIZE']['min'] }}"
+                   max="{{ GRINDER_SETTINGS['MAX_SIZE']['max'] }}"
+                   value="{{ settings.max_size }}"
+                   required>
+        </div>
+
+        <div class="form-group" id="step_size_container">
+            <label for="step_size">Step Size:</label>
+            <input type="number" class="form-control" id="step_size" name="step_size"
+                   step="{{ GRINDER_SETTINGS['STEP_SIZE']['step'] }}"
+                   min="{{ GRINDER_SETTINGS['STEP_SIZE']['min'] }}"
+                   max="{{ GRINDER_SETTINGS['STEP_SIZE']['max'] }}"
+                   value="{{ settings.step_size }}"
+                   required>
+        </div>
+
+        <button type="submit" class="btn btn-burnt-orange">Save Settings</button>
+    </form>
+</div>
+
+<script>
+function toggleStepSettings() {
+    const grinderType = document.getElementById('grinder_type').value;
+    const stepSizeContainer = document.getElementById('step_size_container');
+    stepSizeContainer.style.display = grinderType === 'stepped' ? 'block' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    toggleStepSettings();
+});
+</script>
+{% endblock %} 

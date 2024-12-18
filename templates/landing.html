@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Espresso Shot Tracker</h1>
+    <p class="lead">Track your espresso shots, refine your technique, and enjoy better coffee.</p>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <hr class="my-4">
+    <p>Log in or sign up to start tracking your espresso shots and see your brewing history.</p>
+    <div class="mt-4">
+        <a class="btn btn-burnt-orange btn-lg mr-2" href="{{ url_for('login') }}" role="button">Log In</a>
+        <a class="btn btn-outline-light btn-lg" href="{{ url_for('register') }}" role="button">Sign Up</a>
+    </div>
+</div>
+{% endblock %}
