@@ -3,13 +3,31 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from config import GRINDER_SETTINGS, SHOT_SETTINGS
 from sqlalchemy.sql import func
+from werkzeug.security import generate_password_hash, check_password_hash
+import re
 
 db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False) 
+    password = db.Column(db.String(120), nullable=False)
+    
+    @staticmethod
+    def validate_password(password):
+        if len(password) < 8:
+            raise ValueError("Password must be at least 8 characters long")
+        if not re.search(r"[A-Z]", password):
+            raise ValueError("Password must contain at least one uppercase letter")
+        if not re.search(r"[a-z]", password):
+            raise ValueError("Password must contain at least one lowercase letter")
+        if not re.search(r"\d", password):
+            raise ValueError("Password must contain at least one number")
+        return True
+    
+    def set_password(self, password):
+        self.validate_password(password)
+        self.password = generate_password_hash(password)
 
 class GrinderSettings(db.Model):
     id = db.Column(db.Integer, primary_key=True)

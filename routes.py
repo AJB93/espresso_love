@@ -30,7 +30,7 @@ def get_last_shot(user_id, coffee_id=None):
         }
     return None
 
-def init_routes(app):
+def init_routes(app, limiter):
     @app.route('/')
     @login_required
     def index():
@@ -192,6 +192,7 @@ def init_routes(app):
         return render_template('grinder_settings.html', settings=settings, GRINDER_SETTINGS=GRINDER_SETTINGS)
 
     @app.route('/login', methods=['GET', 'POST'])
+    @limiter.limit("5 per minute")
     def login():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
@@ -203,7 +204,7 @@ def init_routes(app):
                 
                 user = User.query.filter_by(username=username).first()
                 if user and check_password_hash(user.password, password):
-                    login_user(user)
+                    login_user(user, remember=False)  # Disable remember me for security
                     return redirect(url_for('index'))
                 
                 flash('Invalid username or password', 'error')
@@ -213,6 +214,7 @@ def init_routes(app):
         return render_template('login.html')
 
     @app.route('/register', methods=['GET', 'POST'])
+    @limiter.limit("5 per minute")
     def register():
         if current_user.is_authenticated:
             return redirect(url_for('index'))
@@ -222,14 +224,23 @@ def init_routes(app):
                 username = request.form['username']
                 password = request.form['password']
                 
+                # Validate username
+                if not username or len(username) < 3:
+                    flash('Username must be at least 3 characters long', 'error')
+                    return redirect(url_for('register'))
+                
                 if User.query.filter_by(username=username).first():
                     flash('Username already exists', 'error')
                     return redirect(url_for('register'))
                 
-                new_user = User(
-                    username=username,
-                    password=generate_password_hash(password)
-                )
+                # Create new user with password validation
+                new_user = User(username=username)
+                try:
+                    new_user.set_password(password)
+                except ValueError as e:
+                    flash(str(e), 'error')
+                    return redirect(url_for('register'))
+                
                 db.session.add(new_user)
                 db.session.commit()
                 
